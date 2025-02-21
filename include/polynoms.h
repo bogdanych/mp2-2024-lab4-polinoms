@@ -46,7 +46,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw std::logic_error("Too big degree!");
+						throw std::logic_error("Too large degree!");
 				}
 				else if (s[i] == 'y') {
 					if (i + 1 < s.size() && s[i + 1] == '^') {
@@ -58,7 +58,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw;
+						throw std::logic_error("Too large degree!");
 				}
 				else if (s[i] == 'z') {
 					if (i + 1 < s.size() && s[i + 1] == '^') {
@@ -70,7 +70,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw;
+						throw std::logic_error("Too large degree!");
 				}
 				else {
 					throw std::logic_error("Invalid input!");
@@ -86,20 +86,22 @@ public:
 		}
 		for (auto it = lst.begin(); it != lst.end(); ++it) {
 			if (*it != 0)
-				pol.append(*it, it.ind()); // сортируем ненулевые элементы списка
+				pol.append(*it, it.ind()); // СЃРѕСЂС‚РёСЂСѓРµРј РЅРµРЅСѓР»РµРІС‹Рµ СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
 		}
 	}
 	Polynom(const List<T>& sec) {
 		for (auto it = sec.begin(); it != sec.end(); ++it) {
 			if (*it != 0)
-				pol.append(*it, it.ind()); // сортируем ненулевые элементы списка
+				pol.append(*it, it.ind()); // СЃРѕСЂС‚РёСЂСѓРµРј РЅРµРЅСѓР»РµРІС‹Рµ СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°
 		}
 	};
 
-	void operator =(const Polynom& sec) {
-		pol.clear();
-		for (auto it = sec.pol.begin(); it != sec.pol.end(); ++it) {
-			pol.push_back(*it, it.ind());
+	void operator=(const Polynom& sec) {
+		if (this != &sec) {
+			pol.clear();
+			for (auto it = sec.pol.begin(); it != sec.pol.end(); ++it) {
+				pol.push_back(*it, it.ind());
+			}
 		}
 	}
 
@@ -118,7 +120,7 @@ public:
 		while (it1 != pol.end() && it2 != sec.pol.end()) {
 			if (it1.ind() > it2.ind()) {
 				if (*it2 != 0)
-					res.pol.push_back(*it2, it2.ind()); //используем push_back, т.к. pol отсортирован
+					res.pol.push_back(*it2, it2.ind()); //РёСЃРїРѕР»СЊР·СѓРµРј push_back, С‚.Рє. pol РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ
 				++it2;
 			}
 			else if (it1.ind() < it2.ind()) {
@@ -160,7 +162,7 @@ public:
 		return *this + cur * (-1);
 	}
 
-	Polynom operator *(const Polynom& sec) {
+	Polynom operator*(const Polynom& sec) {
 		Polynom<T> res;
 		for (auto it1 = pol.begin(); it1 != pol.end(); ++it1) {
 			for (auto it2 = sec.pol.begin(); it2 != sec.pol.end(); ++it2) {
@@ -211,7 +213,7 @@ public:
 			}
 		}
 		if (res == "")
-			res = "0";
+			res = "0"; // РЅСѓР»РµРІРѕР№ РјРЅРѕРіРѕС‡Р»РµРЅ
 		return res;
 	}
 	
