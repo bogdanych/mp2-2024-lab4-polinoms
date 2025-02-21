@@ -3,9 +3,9 @@
 template<typename T>
 struct Node {
 public:
-    T data; // Данные узла
-    int coef; //коэффициенты при xyz
-    Node* next; // Указатель на следующий узел
+    T data; // Р”Р°РЅРЅС‹Рµ СѓР·Р»Р°
+    int coef; //РєРѕСЌС„С„РёС†РёРµРЅС‚С‹ РїСЂРё xyz
+    Node* next; // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СѓР·РµР»
 
     Node(T value, int index) : data(value), coef(index), next(nullptr) {}
 };
@@ -21,12 +21,12 @@ public:
 
     ListIterator<T> operator++(int) {
         ListIterator<T> temp = *this;
-        m_ptr = m_ptr->next;  // Переход к следующему узлу
+        m_ptr = m_ptr->next;  // РџРµСЂРµС…РѕРґ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СѓР·Р»Сѓ
         return temp;
     }
 
     ListIterator<T>& operator++() {
-        m_ptr = m_ptr->next;  // Переход к следующему узлу
+        m_ptr = m_ptr->next;  // РџРµСЂРµС…РѕРґ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ СѓР·Р»Сѓ
         return *this;
     }
 
@@ -91,9 +91,11 @@ public:
     }
 
     void operator=(const List& l) {
-        clear();
-        for (auto it = l.begin(); it != l.end(); ++it) {
-            push_back(*it, it.ind());
+        if (this != &l) {
+            clear();
+            for (auto it = l.begin(); it != l.end(); ++it) {
+                push_back(*it, it.ind());
+            }
         }
     }
 
@@ -111,7 +113,7 @@ public:
         head = nullptr;
     }
 
-    //добавляет, сортирует по ind
+    //РґРѕР±Р°РІР»СЏРµС‚, СЃРѕСЂС‚РёСЂСѓРµС‚ РїРѕ ind
     void append(T value, int ind) {
         if (ind < 0 || ind > 999)
             throw std::logic_error("Not valid index number while append!");
@@ -131,19 +133,19 @@ public:
 
             }
             else if (current->next != nullptr && current->next->coef == ind)
-                current->next->data += value; //если находим одинаковые индексы, то складываем значения
+                current->next->data += value; //РµСЃР»Рё РЅР°С…РѕРґРёРј РѕРґРёРЅР°РєРѕРІС‹Рµ РёРЅРґРµРєСЃС‹, С‚Рѕ СЃРєР»Р°РґС‹РІР°РµРј Р·РЅР°С‡РµРЅРёСЏ
             else if (current->coef == ind)
                 current->data += value; // current == head
             else {
                 newNode->next = current->next;
-                current->next = newNode; // "вклиниваем" newNode
+                current->next = newNode; // "РІРєР»РёРЅРёРІР°РµРј" newNode
             }
             if (ptr->coef < ind)
                 ptr = ptr->next;
         }
     }
 
-    // добавляет в конец
+    // РґРѕР±Р°РІР»СЏРµС‚ РІ РєРѕРЅРµС†
     void push_back(T value, int ind) {
         if (ind < 0 || ind > 999)
             throw std::logic_error("Not valid index number while push_back!");
@@ -160,7 +162,7 @@ public:
 
     }
 
-    // Отображение элементов списка
+    // РћС‚РѕР±СЂР°Р¶РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ СЃРїРёСЃРєР°
     void display() {
         Node<T>* current = head;
         while (current != nullptr) {
@@ -170,12 +172,12 @@ public:
         std::cout << "nullptr" << std::endl;
     }
 
-    // указатель на начало листа
+    // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅР°С‡Р°Р»Рѕ Р»РёСЃС‚Р°
     ListIterator<T> begin() const {
         return ListIterator<T>(head);
     }
 
-    // указатель на nullptr
+    // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° nullptr
     ListIterator<T> end() const {
         return ListIterator<T>(nullptr); 
     }
