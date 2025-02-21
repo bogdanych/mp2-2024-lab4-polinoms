@@ -46,7 +46,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw std::logic_error("Too large degree!");
+						throw std::logic_error("Not avelable degree!");
 				}
 				else if (s[i] == 'y') {
 					if (i + 1 < s.size() && s[i + 1] == '^') {
@@ -58,7 +58,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw std::logic_error("Too large degree!");
+						throw std::logic_error("Not avelable degree!");
 				}
 				else if (s[i] == 'z') {
 					if (i + 1 < s.size() && s[i + 1] == '^') {
@@ -70,7 +70,7 @@ public:
 						i = i + 1;
 					}
 					if (i < s.size() && std::isdigit(s[i]))
-						throw std::logic_error("Too large degree!");
+						throw std::logic_error("Not avelable degree!");
 				}
 				else {
 					throw std::logic_error("Invalid input!");
@@ -91,6 +91,8 @@ public:
 	}
 	Polynom(const List<T>& sec) {
 		for (auto it = sec.begin(); it != sec.end(); ++it) {
+			if (it.ind() > 999)
+				throw std::logic_error("Large list index!");
 			if (*it != 0)
 				pol.append(*it, it.ind()); // сортируем ненулевые элементы списка
 		}
