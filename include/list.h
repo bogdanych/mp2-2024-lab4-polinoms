@@ -4,10 +4,10 @@ template<typename T>
 struct Node {
 public:
     T data; // Данные узла
-    int coef; //коэффициенты при xyz
+    int ind; // индекс элемента условного массива
     Node* next; // Указатель на следующий узел
-
-    Node(T value, int index) : data(value), coef(index), next(nullptr) {}
+    // Немного костыльно. Простити
+    Node(T value, int index) : data(value), ind(index), next(nullptr) {}
 };
 
 template<typename T>
@@ -39,7 +39,7 @@ public:
     }
 
     int ind() {
-        return m_ptr->coef;
+        return m_ptr->ind;
     }
 
 private:
@@ -55,8 +55,6 @@ public:
 
     List(std::initializer_list<T> lst) {
         int i = 0;
-        if (lst.size() > 999)
-            throw std::logic_error("Large initializer list size!");
         for (auto& el : lst) {
             push_back(el, i++);
         }
@@ -65,12 +63,12 @@ public:
     List(const List& l) : head(nullptr), ptr(nullptr) {
         if (l.head != nullptr) {
             Node<T>* rp = l.head;
-            head = new Node<T>{ rp->data, rp->coef };
+            head = new Node<T>{ rp->data, rp->ind };
             Node<T>* lp = head;
             ptr = head;
             while (rp->next != nullptr) {
                 rp = rp->next;
-                lp->next = new Node<T>{ rp->data,  rp->coef };
+                lp->next = new Node<T>{ rp->data,  rp->ind };
                 lp = lp->next;
             }
         }
@@ -100,7 +98,7 @@ public:
     }
 
     int ind() {
-        return ptr->coef;
+        return ptr->ind;
     }
 
     void clear() {
@@ -115,8 +113,6 @@ public:
 
     //добавляет, сортирует по ind
     void append(T value, int ind) {
-        if (ind < 0 || ind > 999)
-            throw std::logic_error("Not valid index number while append!");
         Node<T>* newNode = new Node<T>(value, ind);
         Node<T>* current = head;
         if (current == nullptr) {
@@ -124,31 +120,29 @@ public:
             ptr = head;
         }
         else {
-            while (current->next != nullptr && ind > current->next->coef) {
+            while (current->next != nullptr && ind > current->next->ind) {
                 current = current->next;
             }
-            if (ind < head->coef) {
+            if (ind < head->ind) {
                 newNode->next = head;
                 head = newNode;
 
             }
-            else if (current->next != nullptr && current->next->coef == ind)
+            else if (current->next != nullptr && current->next->ind == ind)
                 current->next->data += value; //если находим одинаковые индексы, то складываем значения
-            else if (current->coef == ind)
+            else if (current->ind == ind)
                 current->data += value; // current == head
             else {
                 newNode->next = current->next;
                 current->next = newNode; // "вклиниваем" newNode
             }
-            if (ptr->coef < ind)
+            if (ptr->ind < ind)
                 ptr = ptr->next;
         }
     }
 
     // добавляет в конец
     void push_back(T value, int ind) {
-        if (ind < 0 || ind > 999)
-            throw std::logic_error("Not valid index number while push_back!");
         Node<T>* newNode = new Node<T>(value, ind);
         if (head == nullptr) {
             head = newNode;
@@ -166,7 +160,7 @@ public:
     void display() {
         Node<T>* current = head;
         while (current != nullptr) {
-            std::cout << current->data << '(' << current->coef << ") " << " -> ";
+            std::cout << current->data << '(' << current->ind << ") " << " -> ";
             current = current->next;
         }
         std::cout << "nullptr" << std::endl;
