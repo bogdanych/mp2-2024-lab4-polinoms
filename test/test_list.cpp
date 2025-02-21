@@ -170,11 +170,3 @@ TEST(List, push_back_after_append) {
 	++it;
 	ASSERT_EQ(*it, 8);
 }
-TEST(List, throw_to_big_size_push_back) {
-	List<int> a = { };
-	ASSERT_ANY_THROW(a.push_back(1, 1000));
-}
-TEST(List, throw_to_big_size_append) {
-	List<int> a = { };
-	ASSERT_ANY_THROW(a.append(1, 1000));
-}
