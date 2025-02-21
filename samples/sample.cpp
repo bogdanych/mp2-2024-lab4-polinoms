@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include "polynoms.h"
 #include <string>
@@ -7,6 +5,7 @@
 
 
 int main() {
+	//Polynom<int>pol("xyz - xyz");
 	setlocale(LC_ALL, "Russian");
 	std::cout << "Введите полином в формате k * x^a * y^b * z^c + ..., где a,b,c - цифры от 0 до 9\n";
 	std::cout << "Написание единицы можно пропустить, \nа если степень равна нулю, то коэффициент можно не писать.\nВещественную часть числа писать через запятую\n";
@@ -14,11 +13,11 @@ int main() {
 	std::string st;
 	std::getline(std::cin, st);
 	Polynom<double> pol1(st);
-	pol1.display();
+	//pol1.display();
 	std::cout << "Введите второй полином:\n";
 	std::getline(std::cin, st);
 	Polynom<double> pol2(st);
-	pol2.display();
+	//pol2.display();
 	std::cout << "Операции с полиномами: \n";
 	while (1) {
 		std::cout << "0 - выйти, 1 - сложить, 2 - вычесть второй из первого, 3 - вычесть первый из второго, 4 - домножить первый полином на константу, 5 - домножить второй полином на константу, 6 - перемножить\n";
@@ -27,7 +26,7 @@ int main() {
 		Polynom<double> pol3;
 		do {
 			if (inp == 0)
-				break;
+				return 0;
 			else if (inp == 1) {
 				pol3 = pol1 + pol2;
 				pol3.display();
