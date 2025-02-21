@@ -1,6 +1,10 @@
 #include <gtest.h>
 #include "Polynoms.h"
 
+TEST(Polynoms, create_default) {
+    ASSERT_NO_THROW(Polynom<int>p());
+}
+
 TEST(Polynoms, default_polynomial) {
     Polynom<int> a, b("0");
     ASSERT_EQ(a == b, 1);
@@ -33,6 +37,10 @@ TEST(Polynoms, correct_initialize_with_degrees) {
 
 TEST(Polynoms, incorrect_degree) {
     ASSERT_ANY_THROW(Polynom<int>("x^10"));
+}
+
+TEST(Polynoms, negativ_degree) {
+    ASSERT_ANY_THROW(Polynom<int>("x^-10"));
 }
 
 TEST(Polynoms, simple_polynom_like_sum) {
